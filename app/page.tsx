@@ -1,9 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BusinessCard from "@/components/BusinessCard";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { SkeletonCard } from "@/components/SkeletonCard";
 
 interface Business {
   name: string;
@@ -14,6 +25,7 @@ interface Business {
   image: string;
   website: string;
   category: string;
+  business: string;
 }
 
 const businesses: Business[] = [
@@ -22,11 +34,12 @@ const businesses: Business[] = [
     description: "gadget stores, lorem ipsum something",
     isOnline: true,
     location: "Online Store",
-    storeType: "Online ",
+    storeType: "Online",
     image:
       "https://images.unsplash.com/photo-1720659201108-4efe526b289c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8",
     website: "https://www.business1.com",
-    category: "technology",
+    category: "Education",
+    business: "University",
   },
   {
     name: "Mot's Business",
@@ -37,18 +50,20 @@ const businesses: Business[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1674740442550-4f787e4e85cb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8",
     website: "https://www.business2.com",
-    category: "technology",
+    category: "Technology",
+    business: "Hardware Stores",
   },
   {
     name: "Angela 3",
     description: "gadget stores, lorem ipsum something",
     isOnline: true,
     location: "Online",
-    storeType: "Online ",
+    storeType: "Online",
     image:
       "https://images.unsplash.com/photo-1720549385830-905a78562bbe?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyN3x8fGVufDB8fHx8fA%3D%3D",
     website: "https://www.business3.com",
-    category: "food",
+    category: "Restaurants and Food",
+    business: "Fast Food",
   },
   {
     name: "Rita's Business",
@@ -59,7 +74,8 @@ const businesses: Business[] = [
     image:
       "https://images.unsplash.com/photo-1496200186974-4293800e2c20?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxvZ298ZW58MHx8MHx8fDA%3D",
     website: "https://www.business3.com",
-    category: "clothing",
+    category: "Entertainment and Recreation",
+    business: "University",
   },
   {
     name: "Rachael's Business",
@@ -70,24 +86,85 @@ const businesses: Business[] = [
     image:
       "https://images.unsplash.com/photo-1557053964-937650b63311?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvZ298ZW58MHx8MHx8fDA%3D",
     website: "https://www.business3.com",
-    category: "beauty",
+    category: "Beauty and Personal Care",
+    business: "University",
   },
   // Add more businesses as needed
 ];
 
+const categories = [
+  {
+    name: "Technology",
+    sub: ["Hardware Stores", "Tech Startups", "Tech Support Services"],
+  },
+  {
+    name: "Restaurants and Food",
+    sub: ["Fast Food", "Bakeries", "Fine Dining", "Pizzerias"],
+  },
+  {
+    name: "Beauty and Personal Care",
+    sub: [
+      "Hair Saloons",
+      "Barber Shops",
+      "Nail Saloons",
+      "Beauty Spa",
+      "Comestics Stores",
+    ],
+  },
+  {
+    name: "Entertainment and Recreation",
+    sub: [
+      "Movie Theaters",
+      "Amusement Parks",
+      "Night Clubs",
+      "Art Galleries",
+      "Musuems",
+    ],
+  },
+  {
+    name: "Education",
+    sub: [
+      "Schools",
+      "Universities",
+      "Dance Studios",
+      "Music Schools",
+      "Tutoring Centers",
+    ],
+  },
+];
+
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<any>("All");
+  const [loading, setLoading] = useState(false);
+  const [filteredBusinesses, setFilteredBusinesses] = useState<any>(businesses);
 
-  const filteredBusinesses = businesses.filter((business) =>
-    business.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    setLoading(true);
+
+    setTimeout(() => {
+      const filtered = businesses.filter((business) => {
+        return (
+          (selectedCategory === "All" ||
+            business.category === selectedCategory ||
+            business.business === selectedCategory ||
+            business.storeType === selectedCategory) &&
+          business.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
+      setFilteredBusinesses(filtered);
+      setLoading(false);
+    }, 1000);
+  }, [selectedCategory]);
+
+  console.log(filteredBusinesses);
 
   return (
-    <div className=" mx-auto py-4">
+    <div className=" mx-auto py-4 mb-8">
       <Navbar />
 
       <div className="my-20">
-        <div className=" w-48 h-48 mx-auto">
+        <div className=" w-48 h-48 mx-auto hidden lg:block">
           <Image
             src="/images/discord-logo (1).jpg"
             alt="logo"
@@ -101,7 +178,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold mb-4 text-center">
             100Pay Explorer
           </h1>
-          <p className=" font-medium text-center">
+          <p className="text-center hidden lg:block">
             100 Pay Explorer is a comprehensive search tool that enables users
             to discover businesses utilizing the 100 Pay platform for their
             transactions. This tool ensures that you can easily find merchants
@@ -111,38 +188,168 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=" w-[90%] lg:w-[70%] mx-auto flex items-center">
+      <div className=" w-full lg:w-[70%] mx-auto md:flex items-center">
         <input
           type="text"
           placeholder="Search for a business..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex w-[86%] mx-auto items-center justify-between rounded-full bg-white px-4 py-5 shadow-lg focus:outline-none"
+          className="flex w-[86%] mx-auto items-center justify-between border border-gray-50 rounded-full bg-white px-4 py-5 shadow-lg focus:outline-none"
         />
 
-        <div>
-          <button className="flex items-center text-sm border p-2 rounded-full bg-white px-4 py-5 shadow-lg">
-            <img
-              width="20"
-              height="20"
-              src="https://img.icons8.com/dotty/80/horizontal-settings-mixer.png"
-              alt="horizontal-settings-mixer"
-            />
-            <p className="mx-2">Filter</p>
-            <img
-              width="18"
-              height="18"
-              src="https://img.icons8.com/ios-glyphs/30/DBDBDB/sort-down.png"
-              alt="sort-down"
-            />
-          </button>
+        <div className=" mt-5 px-8">
+          <Drawer>
+            <DrawerTrigger>
+              <button className="flex items-center text-sm border border-gray-50 p-2 rounded-xl md:rounded-full bg-white px-4 md:py-5 shadow-lg">
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/dotty/80/horizontal-settings-mixer.png"
+                  alt="horizontal-settings-mixer"
+                />
+                <p className="mx-2">Filter</p>
+                <img
+                  width="18"
+                  height="18"
+                  src="https://img.icons8.com/ios-glyphs/30/DBDBDB/sort-down.png"
+                  alt="sort-down"
+                />
+              </button>
+            </DrawerTrigger>
+            <DrawerContent className="max-h-[50vh]">
+              <DrawerHeader className="mt-5">
+                <DrawerTitle className="text-left">Filter by:</DrawerTitle>
+                <DrawerDescription className="text-left">
+                  You can filter items by choosing your desired category.
+                </DrawerDescription>
+              </DrawerHeader>
+
+              <div className="px-5 overflow-y-scroll">
+                <DrawerClose
+                  className="flex items-center my-4 cursor-pointer hover:bg-gray-100 w-fit hover:p-2"
+                  onClick={() => setSelectedCategory("All")}
+                >
+                  {" "}
+                  <img
+                    width="12"
+                    height="12"
+                    className="mr-2"
+                    src="https://img.icons8.com/material-rounded/24/sphere.png"
+                    alt="sphere"
+                  />
+                  All Stores
+                  <img
+                    width="12"
+                    height="12"
+                    className="ml-2"
+                    src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
+                    alt="forward"
+                  />
+                </DrawerClose>
+                <DrawerClose
+                  className="flex items-center my-4 cursor-pointer hover:bg-gray-100 w-fit hover:p-2"
+                  onClick={() => setSelectedCategory("Online")}
+                >
+                  {" "}
+                  <img
+                    width="12"
+                    height="12"
+                    className="mr-2"
+                    src="https://img.icons8.com/material-rounded/24/sphere.png"
+                    alt="sphere"
+                  />
+                  Online Stores
+                  <img
+                    width="12"
+                    height="12"
+                    className="ml-2"
+                    src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
+                    alt="forward"
+                  />
+                </DrawerClose>
+                <DrawerClose
+                  className="flex items-center mt-4 cursor-pointer hover:bg-gray-100 w-fit hover:p-2"
+                  onClick={() => setSelectedCategory("Physical")}
+                >
+                  <img
+                    width="12"
+                    height="12"
+                    src="https://img.icons8.com/material-rounded/24/sphere.png"
+                    className="mr-2"
+                    alt="sphere"
+                  />
+                  Physical Stores
+                  <img
+                    width="12"
+                    height="12"
+                    className="ml-2"
+                    src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
+                    alt="forward"
+                  />
+                </DrawerClose>
+                <div className=" overflow-hidden">
+                  {categories?.map((item: any, idx: any) => (
+                    <div key={idx}>
+                      <DrawerClose
+                        className="flex items-center my-4 cursor-pointer hover:bg-gray-100 w-fit hover:p-2"
+                        onClick={() => setSelectedCategory(item.name)}
+                      >
+                        <img
+                          width="12"
+                          height="12"
+                          src="https://img.icons8.com/material-rounded/24/sphere.png"
+                          className="mr-2"
+                          alt="sphere"
+                        />
+                        {item.name}
+                        <img
+                          width="12"
+                          height="12"
+                          className="ml-2"
+                          src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
+                          alt="forward"
+                        />
+                      </DrawerClose>
+                      <div className="inline-flex  p-2 w-full overflow-x-scroll scrollbar-hide">
+                        {item.sub?.map((subItem: any, subIdx: any) => (
+                          <DrawerClose
+                            className="bg-gray-100 text-gray-500 p-2 rounded-3xl mx-2 px-4 cursor-pointer text-sm hover:bg-slate-700 hover:text-white whitespace-nowrap"
+                            key={subIdx}
+                            onClick={() => setSelectedCategory(subItem)}
+                          >
+                            {subItem}
+                          </DrawerClose>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <DrawerFooter>
+                <DrawerClose className="absolute top-5 right-5">
+                  <img
+                    width="30"
+                    height="30"
+                    src="https://img.icons8.com/ios/50/cancel.png"
+                    alt="cancel"
+                  />
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-10 lg:mt-20 w-[90%] lg:w-[80%] mx-auto">
-        {filteredBusinesses.map((business, index) => (
-          <BusinessCard key={index} business={business} />
-        ))}
+        {loading ? (
+          <SkeletonCard />
+        ) : (
+          <>
+            {filteredBusinesses.map((business: any, index: any) => (
+              <BusinessCard key={index} business={business} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

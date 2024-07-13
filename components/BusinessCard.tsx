@@ -10,6 +10,7 @@ interface Business {
   image: string;
   website: string;
   category: string;
+  business: string;
 }
 
 interface BusinessCardProps {
