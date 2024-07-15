@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
             </svg>
           </div>
         </Link>
-        <Link href="https://dashboard.100pay.co/" passHref>
+        <Link href="https://dashboard.100pay.co/" target="_blank" passHref>
           <button className=" bg-pay-red-500 text-white px-4 py-2 rounded-xl hover:bg-pay-red-500">
             Get Started
           </button>
