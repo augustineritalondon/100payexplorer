@@ -157,7 +157,12 @@ export default function Home() {
     }, 1000);
   }, [selectedCategory]);
 
-  console.log(filteredBusinesses);
+  useEffect(() => {
+    const searchedItem = businesses.filter((business) => {
+      return business.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setFilteredBusinesses(searchedItem);
+  }, [searchTerm]);
 
   return (
     <div className=" mx-auto py-4 mb-8">
