@@ -197,7 +197,7 @@ export default function Home() {
           className="flex w-[86%] mx-auto items-center justify-between border border-gray-50 rounded-full bg-white px-4 py-5 shadow-lg focus:outline-none"
         />
 
-        <div className=" mt-5 px-8">
+        <div className=" mt-5 lg:mt-0 px-8">
           <Drawer>
             <DrawerTrigger>
               <button className="flex items-center text-sm border border-gray-50 p-2 rounded-xl md:rounded-full bg-white px-4 md:py-5 shadow-lg">
