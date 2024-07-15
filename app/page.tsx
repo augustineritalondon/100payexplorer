@@ -183,7 +183,9 @@ export default function Home() {
             to discover businesses utilizing the 100 Pay platform for their
             transactions. This tool ensures that you can easily find merchants
             who support your preferred payment method, making shopping
-            convenient and seamless.
+            convenient and seamless. Additionally, you can download the mobile
+            app to make payments at these physical stores, enhancing your
+            shopping experience.
           </p>
         </div>
       </div>
