@@ -231,7 +231,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=" w-full lg:w-[70%] mx-auto md:flex items-center">
+      <div className=" w-full lg:!w-[70%] mx-auto md:flex items-center">
         <input
           type="text"
           placeholder="Search for a business..."
