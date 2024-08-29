@@ -44,40 +44,42 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
             <>
               <button
                 onClick={handleVisitWebsite}
-                className="bg-white text-black px-3 mb-2 py-2 rounded-3xl hover:bg-white text-xs hidden lg:block"
+                className="bg-white text-black px-2 mb-2 py-1 rounded-3xl hover:bg-white text-xs hidden lg:block"
               >
                 Visit Website
               </button>
               <button
                 onClick={handleVisitWebsite}
-                className="bg-white text-black px-3 mb-2 py-2 rounded-2xl hover:bg-white text-xs lg:hidden"
+                className="bg-white text-black px-2 mb-2 py-1 rounded-2xl hover:bg-white text-xs lg:hidden flex items-center"
               >
                 <img
-                  width="25"
-                  height="25"
+                  width="18"
+                  height="18"
                   src="https://img.icons8.com/glyph-neue/64/000000/internet.png"
                   alt="internet"
                 />
+                <p className="ml-1">Visit website</p>
               </button>
             </>
           ) : (
             <>
               <button
                 onClick={handleVisitLocation}
-                className="bg-white text-black px-3 mb-2 py-2 rounded-3xl hover:bg-white text-xs hidden lg:block"
+                className="bg-white text-black px-2 mb-2 py-1 rounded-3xl hover:bg-white text-xs hidden lg:block"
               >
                 Visit Location
               </button>
               <button
                 onClick={handleVisitLocation}
-                className="bg-white text-black px-3 mb-2 py-2 rounded-2xl hover:bg-white text-xs lg:hidden"
+                className="bg-white text-black px-2 mb-2 py-1 rounded-2xl hover:bg-white text-xs lg:hidden flex items-center"
               >
                 <img
-                  width="25"
-                  height="25"
+                  width="18"
+                  height="18"
                   src="https://img.icons8.com/pastel-glyph/64/000000/marker--v1.png"
                   alt="marker--v1"
                 />
+                <p className="ml-1">See Location</p>
               </button>
             </>
           )}

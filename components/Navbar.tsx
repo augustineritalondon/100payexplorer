@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
   return (
     <nav
       className="wrapper mx-auto flex max-w-7xl items-center justify-between gap-6
-      rounded-3xl border border-modernblack-200 bg-white p-2 backdrop-blur-md
+      rounded-3xl border border-modernblack-200 bg-white dark:bg-transparent p-2 backdrop-blur-md
       dark:border-modernblack-700 dark:bg-modernblack"
     >
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">

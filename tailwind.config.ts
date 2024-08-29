@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
@@ -64,6 +65,31 @@ const config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        darkMode: {
+          "50": "#f6f7f9",
+          "100": "#ebeef3",
+          "200": "#d4dbe3",
+          "300": "#adbbcc",
+          "400": "#8197af",
+          "500": "#627a95",
+          "600": "#4d617c",
+          "700": "#3f4e65",
+          "800": "#374455",
+          "900": "#313b49",
+          "950": "#111419",
+        },
+        modernblack: {
+          "01": "hsla(210, 20%, 98%, 1)",
+          "02": "hsla(220, 14%, 96%, 1)",
+          "03": "hsla(220, 13%, 91%, 1)",
+          "04": "hsla(216, 12%, 84%, 1)",
+          "05": "hsla(218, 11%, 65%, 1)",
+          "06": "hsla(220, 9%, 46%, 1)",
+          "07": "hsla(215, 14%, 34%, 1)",
+          "08": "hsla(217, 19%, 27%, 1)",
+          "09": "hsla(215, 28%, 17%, 1)",
+          "10": "hsla(221, 39%, 15%, 1)",
         },
       },
       borderRadius: {

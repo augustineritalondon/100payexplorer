@@ -15,6 +15,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { SkeletonCard } from "@/components/SkeletonCard";
+import { ArrowRight2, ArrowRight3 } from "iconsax-react";
+import { useSearchParams } from "next/navigation";
 
 interface Business {
   name: string;
@@ -139,6 +141,40 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [filteredBusinesses, setFilteredBusinesses] = useState<any>(businesses);
 
+  const [darkMode, setDarkMode] = useState(true);
+
+  const searchParams = useSearchParams();
+
+  // const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Check if user prefers dark mode initially
+    const isDarkMode = localStorage.getItem("darkMode") === "true";
+    setDarkMode(isDarkMode);
+  }, []);
+
+  useEffect(() => {
+    // Update localStorage and apply dark mode class
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+      // dispatch(setCurrentTheme("dark"));
+      // localStorage.setItem("currentTheme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+      // dispatch(setCurrentTheme("light"));
+      // localStorage.setItem("currentTheme", "light");
+    }
+  }, [darkMode]);
+
+  useEffect(() => {
+    const theme = searchParams.get("currentTheme");
+
+    console.log(theme);
+    setDarkMode(theme === "dark"); // Set darkMode to true if theme is 'dark', otherwise false
+  }, [searchParams]);
+
   useEffect(() => {
     setLoading(true);
 
@@ -180,10 +216,10 @@ export default function Home() {
         </div>
 
         <div className="mt-5 w-[90%] lg:w-[70%] mx-auto">
-          <h1 className="text-3xl font-bold mb-4 text-center">
+          <h1 className="text-3xl font-bold mb-4 text-center dark:text-modernblack-05">
             100Pay Explorer
           </h1>
-          <p className="text-center hidden lg:block">
+          <p className="text-center hidden lg:block dark:text-modernblack-05">
             100 Pay Explorer is a comprehensive search tool that enables users
             to discover businesses utilizing the 100 Pay platform for their
             transactions. This tool ensures that you can easily find merchants
@@ -201,13 +237,13 @@ export default function Home() {
           placeholder="Search for a business..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex w-[86%] mx-auto items-center justify-between border border-gray-50 rounded-full bg-white px-4 py-5 shadow-lg focus:outline-none"
+          className="flex w-[86%] mx-auto items-center justify-between border border-gray-50 rounded-full bg-white dark:bg-transparent dark:border-modernblack-08 px-4 py-5 shadow-lg focus:outline-none"
         />
 
         <div className=" mt-5 lg:mt-0 px-8">
           <Drawer>
             <DrawerTrigger>
-              <button className="flex items-center text-sm border border-gray-50 p-2 rounded-xl md:rounded-full bg-white px-4 md:py-5 shadow-lg">
+              <button className="flex items-center text-sm border border-gray-50 dark:bg-transparent dark:border-modernblack-08 p-2 rounded-xl md:rounded-full bg-white px-4 md:py-5 shadow-lg">
                 <img
                   width="20"
                   height="20"
@@ -223,9 +259,11 @@ export default function Home() {
                 />
               </button>
             </DrawerTrigger>
-            <DrawerContent className="max-h-[50vh]">
+            <DrawerContent className="max-h-[50vh] dark:bg-[#000]">
               <DrawerHeader className="mt-5">
-                <DrawerTitle className="text-left">Filter by:</DrawerTitle>
+                <DrawerTitle className="text-left dark:text-modernblack-05">
+                  Filter by:
+                </DrawerTitle>
                 <DrawerDescription className="text-left">
                   You can filter items by choosing your desired category.
                 </DrawerDescription>
@@ -237,20 +275,16 @@ export default function Home() {
                   onClick={() => setSelectedCategory("All")}
                 >
                   {" "}
-                  <img
-                    width="12"
-                    height="12"
-                    className="mr-2"
-                    src="https://img.icons8.com/material-rounded/24/sphere.png"
-                    alt="sphere"
+                  <ArrowRight3
+                    size="18"
+                    color="#f20733"
+                    className="mr-2 text-modernblack-09 dark:text-modernblack-05"
                   />
                   All Stores
-                  <img
-                    width="12"
-                    height="12"
-                    className="ml-2"
-                    src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
-                    alt="forward"
+                  <ArrowRight2
+                    size="15"
+                    color="#f20733"
+                    className="ml-2 text-modernblack-09 dark:text-modernblack-05"
                   />
                 </DrawerClose>
                 <DrawerClose
@@ -258,40 +292,32 @@ export default function Home() {
                   onClick={() => setSelectedCategory("Online")}
                 >
                   {" "}
-                  <img
-                    width="12"
-                    height="12"
-                    className="mr-2"
-                    src="https://img.icons8.com/material-rounded/24/sphere.png"
-                    alt="sphere"
+                  <ArrowRight3
+                    size="18"
+                    color="#f20733"
+                    className="mr-2 text-modernblack-09 dark:text-modernblack-05"
                   />
                   Online Stores
-                  <img
-                    width="12"
-                    height="12"
-                    className="ml-2"
-                    src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
-                    alt="forward"
+                  <ArrowRight2
+                    size="15"
+                    color="#f20733"
+                    className="ml-2 text-modernblack-09 dark:text-modernblack-05"
                   />
                 </DrawerClose>
                 <DrawerClose
                   className="flex items-center mt-4 cursor-pointer hover:bg-gray-100 w-fit hover:p-2"
                   onClick={() => setSelectedCategory("Physical")}
                 >
-                  <img
-                    width="12"
-                    height="12"
-                    src="https://img.icons8.com/material-rounded/24/sphere.png"
-                    className="mr-2"
-                    alt="sphere"
+                  <ArrowRight3
+                    size="18"
+                    color="#f20733"
+                    className="mr-2 text-modernblack-09 dark:text-modernblack-05"
                   />
                   Physical Stores
-                  <img
-                    width="12"
-                    height="12"
-                    className="ml-2"
-                    src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
-                    alt="forward"
+                  <ArrowRight2
+                    size="15"
+                    color="#f20733"
+                    className="ml-2 text-modernblack-09 dark:text-modernblack-05"
                   />
                 </DrawerClose>
                 <div className=" overflow-hidden">
@@ -301,20 +327,16 @@ export default function Home() {
                         className="flex items-center my-4 cursor-pointer hover:bg-gray-100 w-fit hover:p-2"
                         onClick={() => setSelectedCategory(item.name)}
                       >
-                        <img
-                          width="12"
-                          height="12"
-                          src="https://img.icons8.com/material-rounded/24/sphere.png"
-                          className="mr-2"
-                          alt="sphere"
+                        <ArrowRight3
+                          size="18"
+                          color="#f20733"
+                          className="mr-2 text-modernblack-09 dark:text-modernblack-05"
                         />
                         {item.name}
-                        <img
-                          width="12"
-                          height="12"
-                          className="ml-2"
-                          src="https://img.icons8.com/ios-glyphs/30/000000/forward.png"
-                          alt="forward"
+                        <ArrowRight2
+                          size="15"
+                          color="#f20733"
+                          className="ml-2 text-modernblack-09 dark:text-modernblack-05"
                         />
                       </DrawerClose>
                       <div className="inline-flex  p-2 w-full overflow-x-scroll scrollbar-hide">

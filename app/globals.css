@@ -66,6 +66,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  .dark body {
+    background: #000;
+  }
 }
 
 .scrollbar-hide {
