@@ -172,7 +172,7 @@ export default function Home() {
     const theme = searchParams.get("currentTheme");
 
     console.log(theme);
-    setDarkMode(theme === "dark"); // Set darkMode to true if theme is 'dark', otherwise false
+    setDarkMode(theme?.includes("dark") || false); // Set darkMode to true if theme is 'dark', otherwise false
   }, [searchParams]);
 
   useEffect(() => {
